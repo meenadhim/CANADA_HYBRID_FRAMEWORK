@@ -8,13 +8,20 @@
 <body>
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
-<tr><th colspan="8">Default suite</th></tr>
-<tr><td><a href="#t0">Default test</a></td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">21,809</td><td></td><td></td></tr>
+<tr><th colspan="8">SearchProductSuite</th></tr>
+<tr><td><a href="#t0">SerachProductTest</a></td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">24,187</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="3">com.tutorialsninja.qa.testcases.SearchProductTest</td><td><a href="#m0">verifySearchWithInValidProduct</a></td><td rowspan="1">1686246000033</td><td rowspan="1">661</td></tr><tr class="passedeven"><td><a href="#m1">verifySearchWithNoProduct</a></td><td rowspan="1">1686246007953</td><td rowspan="1">593</td></tr><tr class="passedeven"><td><a href="#m2">verifySearchWithValidProduct</a></td><td rowspan="1">1686245994170</td><td rowspan="1">894</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">SearchProductSuite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">SerachProductTest &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">com.tutorialsninja.qa.testcases.SearchProductTest</td><td><a href="#m0">verifySearchWithValidProduct</a></td><td rowspan="1">1687018174323</td><td rowspan="1">63</td></tr><tr><th colspan="4">SerachProductTest &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">com.tutorialsninja.qa.testcases.SearchProductTest</td><td><a href="#m1">verifySearchWithInValidProduct</a></td><td rowspan="1">1687018180117</td><td rowspan="1">736</td></tr><tr class="passedeven"><td><a href="#m2">verifySearchWithNoProduct</a></td><td rowspan="1">1687018187876</td><td rowspan="1">974</td></tr></tbody>
 </table>
-<h2>Default test</h2><h3 id="m0">com.tutorialsninja.qa.testcases.SearchProductTest#verifySearchWithInValidProduct</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">com.tutorialsninja.qa.testcases.SearchProductTest#verifySearchWithNoProduct</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m2">com.tutorialsninja.qa.testcases.SearchProductTest#verifySearchWithValidProduct</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>SerachProductTest</h2><h3 id="m0">com.tutorialsninja.qa.testcases.SearchProductTest#verifySearchWithValidProduct</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.IllegalArgumentException: Keys to send should be a not null CharSequence
+	at org.openqa.selenium.remote.RemoteWebElement.sendKeys(RemoteWebElement.java:98)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:52)
+	at jdk.proxy2/jdk.proxy2.$Proxy16.sendKeys(Unknown Source)
+	at com.tutorialsninja.qa.pages.HomePage.enterProductNameInSearchbox(HomePage.java:63)
+	at com.tutorialsninja.qa.testcases.SearchProductTest.verifySearchWithValidProduct(SearchProductTest.java:31)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+... Removed 31 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">com.tutorialsninja.qa.testcases.SearchProductTest#verifySearchWithInValidProduct</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">com.tutorialsninja.qa.testcases.SearchProductTest#verifySearchWithNoProduct</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

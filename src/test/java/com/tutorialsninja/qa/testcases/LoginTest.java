@@ -1,55 +1,54 @@
 package com.tutorialsninja.qa.testcases;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.tutorialsninja.qa.pages.AccountPage;
+import com.tutorialsninja.qa.pages.HomePage;
+import com.tutorialsninja.qa.pages.LoginPage;
 import com.tutorialsninja.qa.testBase.TestBase;
+import com.tutorialsninja.qa.testdata.ExcelData;
 import com.tutorialsninja.qa.utilities.Utils;
 
 public class LoginTest extends TestBase  {
 	public WebDriver driver;
 	public SoftAssert softassert = new SoftAssert();
+	public LoginPage loginpage;
+	public AccountPage accountpage;
+	public HomePage homepage;
 	
 	
 	public LoginTest()  {
 		super();
 	}
 	
-
-
-	@BeforeMethod
+    @BeforeMethod
 	public void setUp()  {
 		driver  = initializeBrowserAndOpenApplication("chrome");
-	    driver.findElement(By.linkText("My Account")).click();
-		driver.findElement(By.linkText("Login")).click();
+	    homepage = new HomePage(driver);
+	    homepage.navigateToLoginPage();
+	    
 	}
-
-	@Test(priority = 1)
-	public void verifyLoginWithValidCredentials() {
-		
-		driver.findElement(By.id("input-email")).sendKeys(prop.getProperty("validEmail"));
-		driver.findElement(By.id("input-password")).sendKeys(prop.getProperty("validPassword"));
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		softassert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
+	
+	@Test(priority = 1, dataProvider = "TN Login", dataProviderClass = ExcelData.class)
+	public void verifyLoginWithValidCredentials(String email, String password) {
+	    accountpage = loginpage.navigateToAccountPage(email, password);
+	    softassert.assertTrue(accountpage.verifyEditAccountInfoLinkIsDisplayed());
 		softassert.assertAll();
 
 	}
 
 	@Test(priority = 2)
 	public void verifyLoginWithValidEmailInvalidPassword() {
-		
-		driver.findElement(By.id("input-email")).sendKeys(prop.getProperty("validEmail"));
-		driver.findElement(By.id("input-password")).sendKeys("Selenium@123456");
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class, 'alert-dismissible')]")).getText();
-		String expectedWarningMessage = "Warning: No match for E-Mail Address and/or Password.";
+		loginpage.enterEmailInEmailTextBox(prop.getProperty("validEmail"));
+		loginpage.enterPasswordinPasswordTextBox(testdataprop.getProperty("invalidPassword"));
+		loginpage.clickOnLoginButton();
+		String actualWarningMessage = loginpage.retrieveEmailPasswordMismatch();
+		String expectedWarningMessage = testdataprop.getProperty("emailPasswordMismatch");
 		softassert.assertTrue(actualWarningMessage.contains(expectedWarningMessage));
 		softassert.assertAll();
 
@@ -57,25 +56,22 @@ public class LoginTest extends TestBase  {
 
 	@Test(priority = 3)
 	public void verifyLoginWithInvalidEmailValidPassword() {
-		
-        driver.findElement(By.id("input-email")).sendKeys(Utils.emailWithDateTimeStamp());
-		driver.findElement(By.id("input-password")).sendKeys(prop.getProperty("validPassword"));
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class, 'alert-dismissible')]")).getText();
-		String expectedWarningMessage = "Warning: No match for E-Mail Address and/or Password.";
+		loginpage.enterEmailInEmailTextBox(Utils.emailWithDateTimeStamp());
+		loginpage.enterPasswordinPasswordTextBox(prop.getProperty("validPassword"));
+		loginpage.clickOnLoginButton();
+		String actualWarningMessage = loginpage.retrieveEmailPasswordMismatch();
+		String expectedWarningMessage =  testdataprop.getProperty("emailPasswordMismatch") ;
 		softassert.assertTrue(actualWarningMessage.contains(expectedWarningMessage));
 		softassert.assertAll();
-
 	}
-
-	@Test(priority = 4)
-	public void verifyLoginWithInvalidCredentials() {
 	
-	    driver.findElement(By.id("input-email")).sendKeys(Utils.emailWithDateTimeStamp());
-		driver.findElement(By.id("input-password")).sendKeys("Selenium@123456");
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class, 'alert-dismissible')]")).getText();
-		String expectedWarningMessage = "Warning: No match for E-Mail Address and/or Password.";
+    @Test(priority = 4)
+	public void verifyLoginWithInvalidCredentials() {
+    	loginpage.enterEmailInEmailTextBox(Utils.emailWithDateTimeStamp());
+		loginpage.enterPasswordinPasswordTextBox(prop.getProperty("invalidPassword"));
+		loginpage.clickOnLoginButton();
+		String actualWarningMessage = loginpage.retrieveEmailPasswordMismatch();
+	    String expectedWarningMessage = testdataprop.getProperty("emailPasswordMismatch");
 		softassert.assertTrue(actualWarningMessage.contains(expectedWarningMessage));
 		softassert.assertAll();
 
@@ -83,10 +79,9 @@ public class LoginTest extends TestBase  {
 
 	@Test(priority = 5)
 	public void verifyLoginWithoutCredentials() {
-		
-        driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class, 'alert-dismissible')]")).getText();
-		String expectedWarningMessage = "Warning: No match for E-Mail Address and/or Password.";
+		loginpage.clickOnLoginButton();
+		String actualWarningMessage = loginpage.retrieveEmailPasswordMismatch();
+        String expectedWarningMessage = testdataprop.getProperty("emailPasswordMismatch");
 		softassert.assertTrue(actualWarningMessage.contains(expectedWarningMessage));
 		softassert.assertAll();
 

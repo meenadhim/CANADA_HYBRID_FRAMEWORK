@@ -20,20 +20,34 @@ public class TestBase {
 	public WebDriver driver;
 	public ChromeOptions options;
 	public Properties prop;
+	public Properties testdataprop;
 	public FileInputStream ip;
+	public FileInputStream iptestdata;
+
 
 	public TestBase() {
 		prop = new Properties();
 
 		try {
-			ip = new FileInputStream(System.getProperty("user.dir")
-					+ "\\src\\test\\java\\com\\tutorilsninja\\qa\\config\\config.properties");
+			ip = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\java\\com\\tutorilsninja\\qa\\config\\config.properties");
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
 		}
 		try {
 			prop.load(ip);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		testdataprop = new Properties();
+		try {
+			iptestdata = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\java\\com\\tutorialsninja\\qa\\testdata\\testdata.properties");
+		} catch (FileNotFoundException e) {
+		      e.printStackTrace();
+		}
+		try {
+			testdataprop.load(iptestdata);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
